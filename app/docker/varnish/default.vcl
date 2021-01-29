@@ -10,6 +10,10 @@ backend imgproxy {
     .host = "imgproxy:8080";
 }
 
+backend frontend {
+    .host = "frontend:3000";
+}
+
 #acl invalidators {
 #    "localhost";
 #    "172.17.0.0"/16;
@@ -20,6 +24,11 @@ sub vcl_recv {
         set req.backend_hint = imgproxy;
         set req.url = regsub(req.url, "^/_image", "");
         return (hash);
+    }
+
+    if (req.url ~ "^/_tailwind/") {
+        set req.backend_hint = frontend;
+        return (pipe);
     }
 
     if (req.http.upgrade ~ "(?i)websocket") {
