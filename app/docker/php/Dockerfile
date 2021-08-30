@@ -4,7 +4,6 @@ RUN apt-get update; \
     apt-get install -y --no-install-recommends \
         openssl \
         git \
-        zlibc \
         zlib1g \
         zlib1g-dev \
         libfreetype6-dev \
