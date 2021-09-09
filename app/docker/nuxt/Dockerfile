@@ -6,7 +6,12 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
-RUN mkdir /.npm; mkdir /.config; mkdir /.cache; mkdir /.local; mkdir /.pm2; chmod 777 /.npm; chmod 777 /.config; chmod 777 /.cache; chmod 777 /.local; chmod 777 /.pm2;
+RUN mkdir -m777 /.npm; \
+    mkdir -m777 /.config; \
+    mkdir -m777 /.cache; \
+    mkdir -m777 /.local; \
+    mkdir -m777 /.pm2; \
+    mkdir -m777 /.tailwindcss
 
 ENV HOST 0.0.0.0
 
