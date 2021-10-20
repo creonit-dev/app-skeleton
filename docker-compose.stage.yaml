@@ -3,8 +3,10 @@ version: '3.4'
 services:
     varnish:
         restart: unless-stopped
-        ports:
-            - 80
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${CI_ENVIRONMENT_DOMAIN}`)"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=auth"
 
     nginx:
         restart: unless-stopped
@@ -22,8 +24,10 @@ services:
     mailhog:
         image: mailhog/mailhog
         restart: unless-stopped
-        ports:
-            - 8025
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-mailhog.rule=Host(`mail-${CI_ENVIRONMENT_DOMAIN}`)"
+            - "traefik.http.services.${COMPOSE_PROJECT_NAME}-mailhog.loadbalancer.server.port=8025"
 
     imgproxy:
         restart: unless-stopped
