@@ -17,3 +17,7 @@ api:
 nuxt:
     resource: .
     type: nuxt
+
+page:
+    resource: .
+    type: page
